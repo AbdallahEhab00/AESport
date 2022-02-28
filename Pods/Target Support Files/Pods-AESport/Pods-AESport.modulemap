@@ -1,0 +1,6 @@
+framework module Pods_AESport {
+  umbrella header "Pods-AESport-umbrella.h"
+
+  export *
+  module * { export * }
+}
