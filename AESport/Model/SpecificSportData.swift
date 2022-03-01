@@ -11,4 +11,5 @@ struct SpecificSportData : Codable {
     let strLeague:String
     let strBadge:String
     let strYoutube:String
+    let idLeague : String
 }

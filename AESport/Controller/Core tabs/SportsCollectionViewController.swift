@@ -16,6 +16,10 @@ class SportsCollectionViewController: UICollectionViewController ,UICollectionVi
     override func viewDidLoad() {
         title = "Sports"
         super.viewDidLoad()
+        collectionView.layer.cornerRadius = 5
+        collectionView.layer.shadowColor = UIColor.label.cgColor
+        collectionView.layer.borderWidth = 1
+        collectionView.layer.borderColor = UIColor.secondarySystemBackground.cgColor
 
         APICaller.shared.getAllSports { result in
 
@@ -60,15 +64,15 @@ class SportsCollectionViewController: UICollectionViewController ,UICollectionVi
         cell.layer.masksToBounds = true
         cell.clipsToBounds = true
         cell.layer.borderWidth = 2
-        cell.layer.borderColor = UIColor.label.cgColor
+        cell.layer.borderColor = UIColor.systemGreen.cgColor
         cell.sportName.text = models[indexPath.row].strSport
-        cell.sportImage.sd_setImage(with: URL(string: models[indexPath.row].strSportThumb), placeholderImage: UIImage(systemName: "photo"))
+        cell.sportImage.sd_setImage(with: URL(string: models[indexPath.row].strSportIconGreen), placeholderImage: UIImage(systemName: "photo"))
        // cell.sportImage.image = UIImage(imageLiteralResourceName: "sp")
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width:200, height: 200)
+        return CGSize(width:120, height: 130)
     }
     
     // MARK: UICollectionViewDelegate

@@ -10,4 +10,5 @@ import Foundation
 struct SportsData : Codable{
     let strSport:String
     let strSportThumb:String
+    let strSportIconGreen:String
 }

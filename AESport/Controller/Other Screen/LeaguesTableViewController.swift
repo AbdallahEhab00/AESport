@@ -6,11 +6,12 @@
 //
 
 import UIKit
-
+import SDWebImage
 class LeaguesTableViewController: UITableViewController {
     
     var sportsName:String = ""
     var sportLegues = [SpecificSportData]()
+    var eventLegues = [UpcomingEventData]()
     override func viewDidLoad() {
         super.viewDidLoad()
         print(sportsName)
@@ -49,17 +50,26 @@ class LeaguesTableViewController: UITableViewController {
 
  
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "legueCell", for: indexPath)
-        cell.textLabel?.text = sportLegues[indexPath.row].strLeague
+        let cell = tableView.dequeueReusableCell(withIdentifier: "legueCell", for: indexPath)as!LeguesTableViewCell
+        cell.legueName.text = sportLegues[indexPath.row].strLeague
+        cell.legueBage.image = UIImage(systemName: "photo") // sportLegues[indexPath.row]
+        cell.legueBage.sd_setImage(with: URL(string: sportLegues[indexPath.row].strBadge), placeholderImage: UIImage(systemName: "photo"))
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let detailsVc = storyboard?.instantiateViewController(withIdentifier: "detailsVc")as! LeagueDetailsViewController
-
-        present(detailsVc, animated: true, completion: nil)
+        let detailsVc = self.storyboard?.instantiateViewController(withIdentifier: "detailsVc")as! LeagueDetailsViewController
+        let urlAppend = sportLegues[indexPath.row].strLeague.replacingOccurrences(of: " ", with: "%20")
+        detailsVc.legueName = urlAppend
+        detailsVc.idLegues = sportLegues[indexPath.row].idLeague
+        
+  navigationController?.pushViewController(detailsVc, animated: true)
+       // present(detailsVc, animated: true, completion: nil)
     }
   
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 150
+    }
 
     /*
     // Override to support conditional editing of the table view.
