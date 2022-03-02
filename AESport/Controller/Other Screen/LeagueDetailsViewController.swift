@@ -6,14 +6,20 @@
 //
 
 import UIKit
+import CoreData
 import SDWebImage
 class LeagueDetailsViewController: UIViewController {
+    
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+
     @IBOutlet weak var upcomingCollectionView: UICollectionView!
     @IBOutlet weak var latestCollectionView: UICollectionView!
     @IBOutlet weak var temsCollectionView: UICollectionView!
     
     
     var legueName = ""
+    var leguBage = ""
+    var legueYoutube = ""
     var idLegues = ""
     var UpcomingDetail = [UpcomingEventData]()
     var latestEvents = [LatestEventsData]()
@@ -22,7 +28,8 @@ class LeagueDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(legueName)
+       // print(legueName)
+        
         APICaller.shared.fetchUpcomingEvent(legueName: legueName) { result in
             switch result {
             case .success(let upcomingDetail):
@@ -72,7 +79,21 @@ class LeagueDetailsViewController: UIViewController {
             self.temsCollectionView.reloadData()
         }
     }
-
+    
+    @IBAction func addFavourutButtonPressed(_ sender: UIButton) {
+        saveLegue()
+    }
+    
+    func saveLegue(){
+       
+        let favourit = FavouritLegue(context: context)
+        favourit.legueNames = legueName.replacingOccurrences(of: "%20", with: " ")
+        favourit.leguebages = leguBage
+        favourit.youtube = legueYoutube
+        try?context.save()
+        print(favourit)
+    }
+    
 }
 
 extension LeagueDetailsViewController : UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{

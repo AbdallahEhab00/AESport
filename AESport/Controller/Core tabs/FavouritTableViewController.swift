@@ -1,40 +1,35 @@
 //
-//  LeaguesTableViewController.swift
+//  FavouritTableViewController.swift
 //  AESport
 //
-//  Created by Abdallah Ehab on 24/02/2022.
+//  Created by Abdallah Ehab on 02/03/2022.
 //
 
 import UIKit
-import SDWebImage
-class LeaguesTableViewController: UITableViewController {
-    
-    var sportsName:String = ""
-    var sportLegues = [SpecificSportData]()
-    var eventLegues = [UpcomingEventData]()
+import CoreData
+class FavouritTableViewController: UITableViewController {
+
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    var favLegues =  [FavouritLegue]()
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(sportsName)
-        
-        APICaller.shared.fetchSpecificSport(sportName: sportsName) { result in
-            switch result{
-            case .success(let legues):
-                self.updatUI(sportLegues: legues)
-            case .failure(let error):
-                print(error.localizedDescription)
+        fetchFavouritLegue()
+
+    }
+    func fetchFavouritLegue(){
+        do{
+           favLegues = try context.fetch(FavouritLegue.fetchRequest())
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
             }
+
+        }catch{
+            print(error.localizedDescription)
         }
         
-        print(sportLegues.count)
     }
     
-    func updatUI(sportLegues:[SpecificSportData]){
-        DispatchQueue.main.async {
-            self.sportLegues = sportLegues
-            self.tableView.reloadData()
-        }
-        
-    }
 
     // MARK: - Table view data source
 
@@ -45,33 +40,14 @@ class LeaguesTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return sportLegues.count
+        return favLegues.count
     }
 
- 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "legueCell", for: indexPath)as!LeguesTableViewCell
-        cell.legueName.text = sportLegues[indexPath.row].strLeague
-        cell.legueBage.image = UIImage(systemName: "photo") // sportLegues[indexPath.row]
-        cell.legueBage.sd_setImage(with: URL(string: sportLegues[indexPath.row].strBadge), placeholderImage: UIImage(systemName: "photo"))
-        return cell
-    }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let detailsVc = self.storyboard?.instantiateViewController(withIdentifier: "detailsVc")as! LeagueDetailsViewController
-        let urlAppend = sportLegues[indexPath.row].strLeague.replacingOccurrences(of: " ", with: "%20")
-        detailsVc.legueName = urlAppend
-        detailsVc.idLegues = sportLegues[indexPath.row].idLeague
-        detailsVc.leguBage = sportLegues[indexPath.row].strBadge
-        detailsVc.legueYoutube = sportLegues[indexPath.row].strBadge
-
-        
-      //navigationController?.pushViewController(detailsVc, animated: true)
-        present(detailsVc, animated: true, completion: nil)
-    }
-  
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 150
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "FavouritTableViewController", for: indexPath)
+        cell.textLabel?.text = favLegues[indexPath.row].legueNames
+        return cell
     }
 
     /*
