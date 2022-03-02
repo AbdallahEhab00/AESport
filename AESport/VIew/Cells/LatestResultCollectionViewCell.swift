@@ -10,4 +10,5 @@ import UIKit
 class LatestResultCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var imageEvent: UIImageView!
     
+    @IBOutlet weak var latestResultLabel: UILabel!
 }

@@ -7,16 +7,19 @@
 
 import UIKit
 import CoreData
+import SDWebImage
 class FavouritTableViewController: UITableViewController {
 
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     var favLegues =  [FavouritLegue]()
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         fetchFavouritLegue()
-
+        
     }
+    
+    
     func fetchFavouritLegue(){
         do{
            favLegues = try context.fetch(FavouritLegue.fetchRequest())
@@ -45,9 +48,21 @@ class FavouritTableViewController: UITableViewController {
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "FavouritTableViewController", for: indexPath)
-        cell.textLabel?.text = favLegues[indexPath.row].legueNames
+        let cell = tableView.dequeueReusableCell(withIdentifier: "FavouritTableViewController", for: indexPath) as! FavouritTableViewCell
+        cell.imageLegue.sd_setImage(with: URL(string: favLegues[indexPath.row].leguebages ?? ""), placeholderImage: UIImage(systemName: "photo"))
+        cell.legueNameLabel.text = favLegues[indexPath.row].legueNames
+       // cell.textLabel?.text = favLegues[indexPath.row].legueNames
+        cell.layer.cornerRadius = 15
+        cell.layer.borderColor = UIColor.label.cgColor
+        cell.layer.borderWidth = 0.5
+        cell.layer.shadowColor = UIColor.secondarySystemBackground.cgColor
         return cell
+    }
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 150
+    }
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
     }
 
     /*

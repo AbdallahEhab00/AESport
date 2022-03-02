@@ -12,11 +12,12 @@ class LeagueDetailsViewController: UIViewController {
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
+    @IBOutlet weak var favoritButton: UIButton!
     @IBOutlet weak var upcomingCollectionView: UICollectionView!
     @IBOutlet weak var latestCollectionView: UICollectionView!
     @IBOutlet weak var temsCollectionView: UICollectionView!
     
-    
+    var isFavourit = false
     var legueName = ""
     var leguBage = ""
     var legueYoutube = ""
@@ -82,6 +83,9 @@ class LeagueDetailsViewController: UIViewController {
     
     @IBAction func addFavourutButtonPressed(_ sender: UIButton) {
         saveLegue()
+        DispatchQueue.main.async {
+            self.updateHeartFavorit()
+        }
     }
     
     func saveLegue(){
@@ -91,9 +95,20 @@ class LeagueDetailsViewController: UIViewController {
         favourit.leguebages = leguBage
         favourit.youtube = legueYoutube
         try?context.save()
-        print(favourit)
+    }
+    func updateHeartFavorit(){
+        
+        if isFavourit == true{
+            favoritButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+        }else{
+            favoritButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+        }
     }
     
+    
+    @IBAction func backToLegueButton(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
 }
 
 extension LeagueDetailsViewController : UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
@@ -109,33 +124,51 @@ extension LeagueDetailsViewController : UICollectionViewDelegate,UICollectionVie
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+
                 switch collectionView {
                 case upcomingCollectionView:
                     let upComingCell = collectionView.dequeueReusableCell(withReuseIdentifier: "upcoming", for: indexPath) as! UpcomingEventCollectionViewCell
-                    upComingCell.upcomingDateLabel.text = "event start \(UpcomingDetail[indexPath.row].dateEvent)"
+                    upComingCell.upcomingDateLabel.text = "start \(UpcomingDetail[indexPath.row].dateEvent)"
                     upComingCell.upcomingImage.sd_setImage(with: URL(string: UpcomingDetail[indexPath.row].strThumb), placeholderImage: UIImage(systemName: "photo"))
                     upComingCell.layer.cornerRadius = 12
                     upComingCell.layer.borderColor = UIColor.label.cgColor
-                    upComingCell.layer.borderWidth = 2
+                    upComingCell.layer.borderWidth =  0.5
                        return upComingCell
                     
                 case latestCollectionView:
                     let resultCell = collectionView.dequeueReusableCell(withReuseIdentifier: "latest", for: indexPath) as! LatestResultCollectionViewCell
                     
-//                    resultCell.upcomingDateLabel.text = "event start \(UpcomingDetail[indexPath.row].dateEvent)"
-//                    resultCell.upcomingImage.sd_setImage(with: URL(string: UpcomingDetail[indexPath.row].strThumb), placeholderImage: UIImage(systemName: "photo"))
-//                    resultCell.layer.cornerRadius = 12
-//                    resultCell.layer.borderColor = UIColor.label.cgColor
-//                    resultCell.layer.borderWidth = 2
                     resultCell.imageEvent.sd_setImage(with: URL(string: latestEvents[indexPath.row].strThumb), placeholderImage: UIImage(systemName: "photo"))
+                    resultCell.latestResultLabel.text = "\(latestEvents[indexPath.row].intHomeScore) : \(latestEvents[indexPath.row].intAwayScore)"
+                    resultCell.layer.cornerRadius = 10
+                    resultCell.layer.borderColor = UIColor.label.cgColor
+                    resultCell.layer.borderWidth =  0.5
                     
                     return resultCell
                     
                 default:
                     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "tems", for: indexPath) as! TeamsCollectionViewCell
-                    cell.lmageTeamLogo.sd_setImage(with: URL(string: teams[indexPath.row].strTeamBadge), placeholderImage: UIImage(systemName: "photo"))
+                    cell.lmageTeamLogo.sd_setImage(with: URL(string: teams[indexPath.row].strTeamLogo), placeholderImage: UIImage(systemName: "photo"))
+                    cell.layer.cornerRadius = 12
+                    cell.layer.borderColor = UIColor.label.cgColor
+                    cell.layer.borderWidth = 0.5
                     return cell
                 }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView == temsCollectionView{
+            let TeamDetailsViewController = storyboard?.instantiateViewController(withIdentifier: "TeamDetailsViewController") as! TeamDetailsViewController
+            
+            TeamDetailsViewController.imageLogo = teams[indexPath.row].strTeamLogo
+            TeamDetailsViewController.imageStaduim = teams[indexPath.row].strStadiumThumb
+            TeamDetailsViewController.imageBanner = teams[indexPath.row].strTeamBanner
+            TeamDetailsViewController.teamName = teams[indexPath.row].strTeam
+            TeamDetailsViewController.sportTybe = teams[indexPath.row].strSport
+            TeamDetailsViewController.modalPresentationStyle = .fullScreen
+            present(TeamDetailsViewController, animated:true)
+            
+        }
     }
     
     

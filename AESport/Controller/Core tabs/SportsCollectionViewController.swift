@@ -16,6 +16,12 @@ class SportsCollectionViewController: UICollectionViewController ,UICollectionVi
     override func viewDidLoad() {
         title = "Sports"
         super.viewDidLoad()
+        
+        let indector = UIActivityIndicatorView(style: .large)
+        indector.center = self.view.center
+        indector.color = .systemGreen
+        view.addSubview(indector)
+        indector.startAnimating()
         collectionView.layer.cornerRadius = 5
         collectionView.layer.shadowColor = UIColor.label.cgColor
         collectionView.layer.borderWidth = 1
@@ -26,6 +32,7 @@ class SportsCollectionViewController: UICollectionViewController ,UICollectionVi
             switch result {
             case .success(let model):
                 self.updateUI(with: model)
+                indector.stopAnimating()
                // self.updateUI(with: )
             case .failure(let erorr):
                 print(erorr.localizedDescription)

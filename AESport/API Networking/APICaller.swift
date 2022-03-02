@@ -51,7 +51,7 @@ final class APICaller {
     func fetchSpecificSport(sportName:String,completion:@escaping(Result<[SpecificSportData],Error>)->Void){
         //  https://www.thesportsdb.com/api/v1/json/2/search_all_leagues.php?s=Soccer
 
-        createRequest(url:URL(string: Constant.basUrl+"search_all_leagues.php?s=\(sportName)") ) { request in
+        createRequest(url:URL(string: Constant.basUrl+"search_all_leagues.php?c=England&s=\(sportName)") ) { request in
             let task = URLSession.shared.dataTask(with: request) { data, _, error in
                 
                 guard let data = data , error == nil else {

@@ -54,6 +54,10 @@ class LeaguesTableViewController: UITableViewController {
         cell.legueName.text = sportLegues[indexPath.row].strLeague
         cell.legueBage.image = UIImage(systemName: "photo") // sportLegues[indexPath.row]
         cell.legueBage.sd_setImage(with: URL(string: sportLegues[indexPath.row].strBadge), placeholderImage: UIImage(systemName: "photo"))
+        cell.layer.cornerRadius = 20
+        cell.layer.borderColor = UIColor.label.cgColor
+        cell.layer.borderWidth = 0.5
+        cell.layer.shadowColor = UIColor.secondarySystemBackground.cgColor
         return cell
     }
     
@@ -67,12 +71,18 @@ class LeaguesTableViewController: UITableViewController {
 
         
       //navigationController?.pushViewController(detailsVc, animated: true)
+        detailsVc.modalPresentationStyle = .fullScreen
         present(detailsVc, animated: true, completion: nil)
+        
+        tableView.deselectRow(at: indexPath, animated: false)
+        
     }
   
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 150
+        return 140
     }
+    
+  
 
     /*
     // Override to support conditional editing of the table view.

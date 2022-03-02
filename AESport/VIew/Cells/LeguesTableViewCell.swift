@@ -21,4 +21,11 @@ class LeguesTableViewCell: UITableViewCell {
                 UIApplication.shared.openURL(NSURL(string: youtubeUrl)! as URL)
     }
     
+  //  import sfsafari
+//    guard let url = URL(string: urlString)else{
+//        return
+//    }
+//    let vc = SFSafariViewController(url: url)
+//    present(vc, animated: true)
+//
 }
