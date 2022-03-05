@@ -12,15 +12,16 @@ private let reuseIdentifier = "item"
 class SportsCollectionViewController: UICollectionViewController ,UICollectionViewDelegateFlowLayout{
 
     private var models = [SportsData]()
+    private let indector = UIActivityIndicatorView()
 
     override func viewDidLoad() {
         title = "Sports"
-        super.viewDidLoad()
         
-        let indector = UIActivityIndicatorView(style: .large)
+        super.viewDidLoad()
+        indector.style = .large
         indector.center = self.view.center
         indector.color = .systemGreen
-        view.addSubview(indector)
+        self.view.addSubview(indector)
         indector.startAnimating()
         collectionView.layer.cornerRadius = 5
         collectionView.layer.shadowColor = UIColor.label.cgColor
@@ -31,9 +32,9 @@ class SportsCollectionViewController: UICollectionViewController ,UICollectionVi
 
             switch result {
             case .success(let model):
+                
                 self.updateUI(with: model)
-                indector.stopAnimating()
-               // self.updateUI(with: )
+
             case .failure(let erorr):
                 print(erorr.localizedDescription)
             }
@@ -45,6 +46,7 @@ class SportsCollectionViewController: UICollectionViewController ,UICollectionVi
     func updateUI(with model : [SportsData]){
         DispatchQueue.main.async {
             self.models = model
+            self.indector.stopAnimating()
             self.collectionView.reloadData()
         }
        
@@ -67,14 +69,13 @@ class SportsCollectionViewController: UICollectionViewController ,UICollectionVi
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! SportsCollectionViewCell
-        cell.layer.cornerRadius = 10
-        cell.layer.masksToBounds = true
-        cell.clipsToBounds = true
-        cell.layer.borderWidth = 2
-        cell.layer.borderColor = UIColor.systemGreen.cgColor
+        cell.contentView.layer.cornerRadius = 10
+        cell.contentView.layer.masksToBounds = true
+        cell.contentView.clipsToBounds = true
+        cell.contentView.layer.borderWidth = 2
+        cell.contentView.layer.borderColor = UIColor.label.cgColor
         cell.sportName.text = models[indexPath.row].strSport
         cell.sportImage.sd_setImage(with: URL(string: models[indexPath.row].strSportIconGreen), placeholderImage: UIImage(systemName: "photo"))
-       // cell.sportImage.image = UIImage(imageLiteralResourceName: "sp")
         return cell
     }
 

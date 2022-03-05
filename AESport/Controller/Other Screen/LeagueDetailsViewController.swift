@@ -128,7 +128,7 @@ extension LeagueDetailsViewController : UICollectionViewDelegate,UICollectionVie
                 switch collectionView {
                 case upcomingCollectionView:
                     let upComingCell = collectionView.dequeueReusableCell(withReuseIdentifier: "upcoming", for: indexPath) as! UpcomingEventCollectionViewCell
-                    upComingCell.upcomingDateLabel.text = "start \(UpcomingDetail[indexPath.row].dateEvent)"
+                    upComingCell.upcomingDateLabel.text = "\(UpcomingDetail[indexPath.row].strTime)     \(UpcomingDetail[indexPath.row].dateEvent)"
                     upComingCell.upcomingImage.sd_setImage(with: URL(string: UpcomingDetail[indexPath.row].strThumb), placeholderImage: UIImage(systemName: "photo"))
                     upComingCell.layer.cornerRadius = 12
                     upComingCell.layer.borderColor = UIColor.label.cgColor
@@ -160,6 +160,7 @@ extension LeagueDetailsViewController : UICollectionViewDelegate,UICollectionVie
         if collectionView == temsCollectionView{
             let TeamDetailsViewController = storyboard?.instantiateViewController(withIdentifier: "TeamDetailsViewController") as! TeamDetailsViewController
             
+            TeamDetailsViewController.teamData = teams[indexPath.row]
             TeamDetailsViewController.imageLogo = teams[indexPath.row].strTeamLogo
             TeamDetailsViewController.imageStaduim = teams[indexPath.row].strStadiumThumb
             TeamDetailsViewController.imageBanner = teams[indexPath.row].strTeamBanner

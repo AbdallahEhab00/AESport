@@ -18,6 +18,11 @@ struct TeamsData : Codable {
     let strTeamBadge:String
     let strTeamLogo : String
     let strTeamBanner : String
+    let strDescriptionEN :String
+    let strFacebook:String
+    let strTwitter:String
+    let strInstagram:String
+    let strYoutube:String
 
     
 

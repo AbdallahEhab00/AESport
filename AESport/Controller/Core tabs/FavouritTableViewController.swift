@@ -15,9 +15,28 @@ class FavouritTableViewController: UITableViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        fetchFavouritLegue()
+       fetchFavouritLegue()
+        
         
     }
+    
+//    func retriveData(with request:NSFetchRequest<FavouritLegue> = FavouritLegue.fetchRequest() , predicate:NSPredicate? = nil ){
+//       let favPredicate = NSPredicate(format: "FavouritLegue.legueNames MATCHES %@", "BTCC")
+//
+//        if let validPredicte = predicate {
+//            let mixPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [favPredicate,validPredicte])
+//            request.predicate = mixPredicate
+//        }else{
+//            request.predicate = favPredicate
+//        }
+//
+//        do{
+//            favLegues = try context.fetch(request)
+//        }catch{
+//            print("error in load item in context Cor Data\(error)")
+//        }
+//        tableView.reloadData()
+//    }
     
     
     func fetchFavouritLegue(){
@@ -65,26 +84,30 @@ class FavouritTableViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: false)
     }
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
+   
 
-    /*
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the data source
+            context.delete(favLegues[indexPath.row])
+            favLegues.remove(at: indexPath.row)
+            save()
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+          
         }    
     }
-    */
-
+    
+    func save(){
+        do{
+            try context.save()
+        }
+        catch{
+            print(error.localizedDescription)
+        }
+    }
+    
+    
     /*
     // Override to support rearranging the table view.
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {

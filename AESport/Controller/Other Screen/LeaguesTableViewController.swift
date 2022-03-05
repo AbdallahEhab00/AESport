@@ -51,6 +51,7 @@ class LeaguesTableViewController: UITableViewController {
  
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "legueCell", for: indexPath)as!LeguesTableViewCell
+        cell.legueYoutubeName = sportLegues[indexPath.row].strYoutube
         cell.legueName.text = sportLegues[indexPath.row].strLeague
         cell.legueBage.image = UIImage(systemName: "photo") // sportLegues[indexPath.row]
         cell.legueBage.sd_setImage(with: URL(string: sportLegues[indexPath.row].strBadge), placeholderImage: UIImage(systemName: "photo"))

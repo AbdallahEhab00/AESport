@@ -12,9 +12,11 @@ class TeamDetailsViewController: UIViewController {
     @IBOutlet weak var stadiumImage: UIImageView!
     @IBOutlet weak var logoImage: UIImageView!
     @IBOutlet weak var bannerImage: UIImageView!
-    @IBOutlet weak var teamNamelabel: UILabel!
-    @IBOutlet weak var sportTybeLabel: UILabel!
+    @IBOutlet weak var imageBage: UIImageView!
+    @IBOutlet weak var descriptionName: UITextView!
     
+    
+    var teamData :TeamsData?
     var teamName:String = ""
     var sportTybe:String = ""
     
@@ -25,12 +27,12 @@ class TeamDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        descriptionName.text = teamData?.strDescriptionEN
         stadiumImage.sd_setImage(with: URL(string: imageStaduim), placeholderImage: UIImage(systemName: "photo"))
         logoImage.sd_setImage(with: URL(string: imageLogo), placeholderImage: UIImage(systemName: "photo"))
         bannerImage.sd_setImage(with: URL(string: imageBanner), placeholderImage: UIImage(systemName: "photo"))
-
-        teamNamelabel.text = teamName
-        sportTybeLabel.text = sportTybe
+        imageBage.sd_setImage(with: URL(string: teamData!.strTeamBadge), placeholderImage: UIImage(systemName: "photo"))
+        
 
     }
     

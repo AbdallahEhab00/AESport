@@ -12,5 +12,7 @@ struct UpcomingEventData:Codable {
     let strThumb:String
     let dateEvent:String
     let idLeague:String
+    let strTime : String
+
     
 }
