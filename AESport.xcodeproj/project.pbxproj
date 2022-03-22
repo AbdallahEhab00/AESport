@@ -54,6 +54,7 @@
 		D636ED0F27C6ED8D00162A56 /* SportsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportsCollectionViewController.swift; sourceTree = "<group>"; };
 		D636ED1227C6F60B00162A56 /* APICaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICaller.swift; sourceTree = "<group>"; };
 		D636ED1427C70D2400162A56 /* SportsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportsModel.swift; sourceTree = "<group>"; };
+		D654870B27D4260800ECBA1F /* AESport.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AESport.entitlements; sourceTree = "<group>"; };
 		D6698E1227CD50C60061CB23 /* UpcomingEventModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingEventModel.swift; sourceTree = "<group>"; };
 		D6698E1427CD50DA0061CB23 /* UpcomingEventData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingEventData.swift; sourceTree = "<group>"; };
 		D6698E1627CD546C0061CB23 /* UpcomingEventCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingEventCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -123,6 +124,7 @@
 		D636ECE827C6E71A00162A56 /* AESport */ = {
 			isa = PBXGroup;
 			children = (
+				D654870B27D4260800ECBA1F /* AESport.entitlements */,
 				D636ED0027C6E73F00162A56 /* Resources */,
 				D636ED1127C6F5EF00162A56 /* API Networking */,
 				D636ED0427C6E78A00162A56 /* Model */,
@@ -514,6 +516,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = AESport/AESport.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -542,6 +545,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = AESport/AESport.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;

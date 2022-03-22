@@ -24,13 +24,22 @@ final class APICaller {
         static let basUrl = "https://www.thesportsdb.com/api/v1/json/2/"
     }
     
+    
+    private func createRequest(url:URL?,completion:(URLRequest)->Void){
+        guard let apiUrl = url else{
+            return
+        }
+        let request = URLRequest(url: apiUrl)
+        completion(request)
+    }
+    
+    
     public func getAllSports(completion:@escaping(Result<[SportsData],Error>)->Void){
         createRequest(url:URL(string: Constant.basUrl+"all_sports.php")) { request in
             let task = URLSession.shared.dataTask(with: request) { data, _ , erorr in
                 
                 guard let data = data , erorr == nil else{
                     completion(.failure(apiErorr.faildTogetSportsData))
-                    
                     return
                 }
                 do
@@ -145,16 +154,6 @@ final class APICaller {
             task.resume()
         }
         
-    }
-    
-    
-    
-    private func createRequest(url:URL?,completion:(URLRequest)->Void){
-        guard let apiUrl = url else{
-            return
-        }
-        let request = URLRequest(url: apiUrl)
-        completion(request)
     }
     
 }
